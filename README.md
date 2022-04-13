@@ -6,6 +6,8 @@ You can get access to the server by sending Tim the contents of `~/.ssh/id_rsa.p
 
 Once your public key is added, you can log in with:
 
+````
 ssh -p 10022 root@hobbs.cz
+````
 
 There will be no password.
