@@ -32,12 +32,19 @@
     git
     emacs
     htop
-    python3Full
-    virtualenv
     kubectl
+    doctl
     postgresql
+    awscli
+    goofys
+    p7zip
+    osm2pgsql
+    cron
+    nfs-utils
+    hddtemp
+    lm_sensors
+    (python3Full.withPackages(ps: with ps; [ psycopg2 pyinotify ]))
   ];
-
   virtualisation.docker.enable = true;
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -81,6 +88,7 @@
     isNormalUser = true;
     home = "/home/mtbmap";
     description = "MNK user";
+    extraGroups = [ "wheel" ];
   };
 
   # Open ports in the firewall.
@@ -97,4 +105,12 @@
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "21.11"; # Did you read the comment?
 
+  # Enable cron service
+  services.cron = {
+    enable = true;
+    systemCronJobs = [
+      "19 0 * * * root bash -c \"if ! pgrep --exact 'render_list' > /dev/null; then cd /home/mtbmap/rendering-PNK-ZM/Devel/systemdeploy/ && ./updatemap.sh |& tee -a /home/mtbmap/rendering-PNK-ZM/logs/update_db_and_rendering.log; fi\""
+      "0 0 * * 0  root bash -c \"cd /home/mtbmap/rendering-PNK-ZM/backup/ && ./backup_tiles.sh |& tee -a /home/mtbmap/rendering-PNK-ZM/logs/backup_tiles.log\""
+    ];
+  };
 }
