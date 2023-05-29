@@ -19,7 +19,7 @@ Copy disko config to configurations dir:
 ```
 cd /mnt/etc/nixos/
 sudo git clone git@gitlab.com:auto-mat/infrastructure/mnk-render-server-in-office.git
-rm configuration.nix
-ln -s mnk-server-in-office/configuration.nix configuration.nix
+sudo rm configuration.nix
+sudo ln -s mnk-server-in-office/configuration.nix configuration.nix
 ```
 
