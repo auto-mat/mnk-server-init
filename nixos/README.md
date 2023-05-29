@@ -17,6 +17,9 @@ sudo nixos-generate-config --no-filesystems --root /mnt
 Copy disko config to configurations dir:
 
 ```
-sudo mv *.nix /etc/nixos/
+cd /mnt/etc/nixos/
+sudo git clone git@gitlab.com:auto-mat/infrastructure/mnk-render-server-in-office.git
+rm configuration.nix
+ln -s mnk-server-in-office/configuration.nix configuration.nix
 ```
 
