@@ -1,3 +1,12 @@
+Updating the config:
+--------------------
+
+```
+cd /etc/nixos/mnk-server-in-office
+sudo git pull
+sudo nixos-rebuild --switch
+```
+
 First time setup:
 -----------------
 (Inspired by [disko manual](https://github.com/nix-community/disko/blob/master/docs/quickstart.md))
@@ -20,6 +29,11 @@ Copy disko config to configurations dir:
 cd /mnt/etc/nixos/
 sudo git clone git@gitlab.com:auto-mat/infrastructure/mnk-render-server-in-office.git
 sudo rm configuration.nix
-sudo ln -s mnk-server-in-office/configuration.nix configuration.nix
+sudo ln -s mnk-render-server-in-office/configuration.nix ./
 ```
 
+Run the install:
+
+```
+sudo nixos-install
+```
