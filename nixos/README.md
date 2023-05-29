@@ -2,7 +2,7 @@ Updating the config:
 --------------------
 
 ```
-cd /etc/nixos/mnk-server-in-office
+cd /etc/nixos/mnk-server-init
 sudo git pull
 sudo nixos-rebuild --switch
 ```
@@ -27,9 +27,9 @@ Copy disko config to configurations dir:
 
 ```
 cd /mnt/etc/nixos/
-sudo git clone git@gitlab.com:auto-mat/infrastructure/mnk-render-server-in-office.git
+sudo git clone git@github.com:auto-mat/mnk-server-init.git
 sudo rm configuration.nix
-sudo ln -s mnk-render-server-in-office/configuration.nix ./
+sudo ln -s mnk-server-init/nixos/configuration.nix ./
 ```
 
 Run the install:
