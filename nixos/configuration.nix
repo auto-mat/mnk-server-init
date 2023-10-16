@@ -126,7 +126,7 @@
   services.cron = {
     enable = true;
     systemCronJobs = [
-      # "10 10 * * * root bash -c \"if ! pgrep --exact 'render_list' > /dev/null; then cd /home/mtbmap/rendering-PNK-ZM/Devel/systemdeploy/ && ./updatemap.sh |& tee -a /home/mtbmap/rendering-PNK-ZM/logs/update_db_and_rendering.log; fi\""
+      "30 0 * * * root bash -c \"if ! pgrep --exact 'render_list' > /dev/null; then cd /home/mtbmap/rendering-PNK-ZM/Devel/systemdeploy/ && ./updatemap.sh |& tee -a /home/mtbmap/rendering-PNK-ZM/logs/update_db_and_rendering.log; fi\""
       # "25 13 * * * root bash -c \"if ! pgrep --exact 'render_list' > /dev/null; then cd /home/mtbmap/rendering-PNK-ZM/Devel/systemdeploy/ && ./updatemap.sh |& tee -a /home/mtbmap/rendering-PNK-ZM/logs/update_db_and_rendering.log; fi\""
       # "0 0 * * 0  root bash -c \"cd /home/mtbmap/rendering-PNK-ZM/backup/ && ./backup_tiles.sh |& tee -a /home/mtbmap/rendering-PNK-ZM/logs/backup_tiles.log\""
     ];
