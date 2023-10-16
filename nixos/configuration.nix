@@ -60,6 +60,7 @@
     hddtemp
     lm_sensors
     psmisc
+    autossh
     (python3Full.withPackages(ps: with ps; [ psycopg2 pyinotify ]))
   ];  
   virtualisation.docker.enable = true;
