@@ -14,12 +14,18 @@
    })
     ];
 
+  # Enable swap file
+  swapDevices = [{
+    device = "/swapfile";
+    size = 1024 * 8;
+  }]
+
   # Use the systemd-boot EFI boot loader.
   boot.loader.grub = {
     # Use grub 2 as boot loader.
     enable = true;
     version = 2;
- 
+
     # Define on which hard drive you want to install Grub.
     devices = [ "/dev/disk/by-id/ata-Samsung_SSD_870_EVO_500GB_S7EWNJ0W413399V" "/dev/disk/by-id/ata-Samsung_SSD_870_EVO_500GB_S7EWNJ0W413425J" ];
   };
@@ -28,7 +34,7 @@
     "fs.inotify.max_user_watches"   = 1048576;   # default:  8192
     "fs.inotify.max_user_instances" =    1024;   # default:   128
     "fs.inotify.max_queued_events"  =   32768;   # default: 16384
-  };  
+  };
 
   networking.hostName = "mnk-portable-server";
   time.timeZone = "Europe/Prague";
@@ -62,7 +68,7 @@
     psmisc
     autossh
     (python3Full.withPackages(ps: with ps; [ psycopg2 pyinotify ]))
-  ];  
+  ];
   virtualisation.docker.enable = true;
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -122,7 +128,7 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "21.11"; # Did you read the comment?
-  
+
   # Enable cron service
   services.cron = {
     enable = true;
