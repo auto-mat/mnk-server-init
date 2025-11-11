@@ -144,6 +144,7 @@ fileSystems."/boot" = {
     enable = true;
     systemCronJobs = [
       "30 0 * * * root bash -c \"if ! pgrep --exact 'render_list' > /dev/null; then cd /home/mtbmap/rendering-PNK-ZM/Devel/systemdeploy/ && ./set_network_bandwidth.sh && ./updatemap.sh |& tee -a /home/mtbmap/rendering-PNK-ZM/logs/update_db_and_rendering.log; fi\""
+      "* * * * *  root bash -c \"cd /home/mtbmap/ && ./check_ssh_connection.sh\""
       # "25 13 * * * root bash -c \"if ! pgrep --exact 'render_list' > /dev/null; then cd /home/mtbmap/rendering-PNK-ZM/Devel/systemdeploy/ && ./updatemap.sh |& tee -a /home/mtbmap/rendering-PNK-ZM/logs/update_db_and_rendering.log; fi\""
       # "0 0 * * 0  root bash -c \"cd /home/mtbmap/rendering-PNK-ZM/backup/ && ./backup_tiles.sh |& tee -a /home/mtbmap/rendering-PNK-ZM/logs/backup_tiles.log\""
     ];
