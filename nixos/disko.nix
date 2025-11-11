@@ -1,77 +1,66 @@
-{ disks ? [ "/dev/disk/by-id/ata-Samsung_SSD_870_EVO_500GB_S7EWNJ0W413399V" "/dev/disk/by-id/ata-Samsung_SSD_870_EVO_500GB_S7EWNJ0W413425J" ], ... }: { disko.devices = {
+{ disks ? [ "/dev/disk/by-id/ata-Samsung_SSD_870_EVO_500GB_S7EWNJ0W413399V" "/dev/disk/by-id/ata-Samsung_SSD_870_EVO_500GB_S7EWNJ0W413425J" ], ... }: {
+  disko.devices = {
     disk = {
       one = {
         type = "disk";
         device = builtins.elemAt disks 0;
         content = {
-          type = "table";
-          format = "gpt";
-          partitions = [
-            {
-              name = "boot";
-              start = "0";
-              end = "1M";
-              part-type = "primary";
-              flags = [ "bios_grub" ];
-            }
-            {
-              name = "ESP";
-              start = "1MiB";
-              end = "128MiB";
-              fs-type = "fat32";
-              bootable = true;
+          type = "gpt";
+          partitions = {
+            boot = {
+              size = "1M";
+              type = "EF02";  # BIOS boot partition type
+              priority = 1;
+            };
+            ESP = {
+              size = "127M";  # 128MiB - 1MiB
+              type = "EF00";  # EFI System Partition type
+              priority = 2;
               content = {
                 type = "mdraid";
                 name = "boot";
               };
-            }
-            {
-              name = "mdadm";
-              start = "128MiB";
-              end = "100%";
+            };
+            mdadm = {
+              size = "100%";
+              priority = 3;
               content = {
                 type = "mdraid";
                 name = "raid1";
               };
-            }
-          ];
+            };
+          };
         };
       };
       two = {
         type = "disk";
         device = builtins.elemAt disks 1;
         content = {
-          type = "table";
-          format = "gpt";
-          partitions = [
-            {
-              name = "boot";
-              start = "0";
-              end = "1M";
-              part-type = "primary";
-              flags = [ "bios_grub" ];
-            }
-            {
-              name = "ESP";
-              start = "1MiB";
-              end = "128MiB";
-              fs-type = "fat32";
-              bootable = true;
+          type = "gpt";
+          partitions = {
+            boot = {
+              size = "1M";
+              type = "EF02";  # BIOS boot partition type
+              priority = 1;
+            };
+            ESP = {
+              size = "127M";  # 128MiB - 1MiB
+              type = "EF00";  # EFI System Partition type
+              priority = 2;
               content = {
                 type = "mdraid";
                 name = "boot";
               };
-            }
-            {
-              name = "mdadm";
-              start = "128MiB";
-              end = "100%";
+            };
+            mdadm = {
+              size = "100%";
+              priority = 3;
               content = {
                 type = "mdraid";
                 name = "raid1";
               };
-            }
-          ];
+            };
+          };
         };
       };
     };
@@ -90,23 +79,12 @@
         type = "mdadm";
         level = 1;
         content = {
-          type = "table";
-          format = "gpt";
-          partitions = [
-            {
-              name = "primary";
-              start = "1MiB";
-              end = "100%";
-              content = {
-                type = "filesystem";
-                format = "ext4";
-                mountpoint = "/";
-              };
-            }
-          ];
+          type = "filesystem";
+          format = "ext4";
+          mountpoint = "/";
         };
       };
     };
-};}
-
+  };
+}
 
