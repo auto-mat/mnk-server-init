@@ -144,8 +144,8 @@ fileSystems."/boot" = {
     enable = true;
     systemCronJobs = [
       "30 0 * * * root bash -c \"if ! pgrep --exact 'render_list' > /dev/null; then cd /home/mtbmap/rendering-PNK-ZM/Devel/systemdeploy/ && ./updatemap.sh |& tee -a /home/mtbmap/rendering-PNK-ZM/logs/update_db_and_rendering.log; fi\""
-      "* 8 * * * root /home/mtbmap/rendering-PNK-ZM/Devel/systemdeploy/set_network_bandwidth.sh > /home/mtbmap/set_network_bandwidth.log 2>&1"
-      "* 18 * * * root /home/mtbmap/rendering-PNK-ZM/Devel/systemdeploy/set_network_bandwidth.sh remove > /home/mtbmap/remove_network_bandwidth.log 2>&1"
+      "* 8 * * 1-5 root /home/mtbmap/rendering-PNK-ZM/Devel/systemdeploy/set_network_bandwidth.sh > /home/mtbmap/set_network_bandwidth.log 2>&1"
+      "* 18 * * 1-5 root /home/mtbmap/rendering-PNK-ZM/Devel/systemdeploy/set_network_bandwidth.sh remove > /home/mtbmap/remove_network_bandwidth.log 2>&1"
       "* * * * * root /home/mtbmap/check_ssh_connection.sh > /home/mtbmap/check_ssh_connection.log 2>&1"
       # "25 13 * * * root bash -c \"if ! pgrep --exact 'render_list' > /dev/null; then cd /home/mtbmap/rendering-PNK-ZM/Devel/systemdeploy/ && ./updatemap.sh |& tee -a /home/mtbmap/rendering-PNK-ZM/logs/update_db_and_rendering.log; fi\""
       # "0 0 * * 0  root bash -c \"cd /home/mtbmap/rendering-PNK-ZM/backup/ && ./backup_tiles.sh |& tee -a /home/mtbmap/rendering-PNK-ZM/logs/backup_tiles.log\""
