@@ -16,9 +16,22 @@ else
   log "KEY_MISSING-/root/.ssh/id_rsa"
 fi
 
-# Test SSH connection with verbose output, capture errors
+# Test SSH connection - first do a quick test with timeout
+log "SSH_TEST_START"
+ssh -v -o StrictHostKeyChecking=no -o BatchMode=yes -o ConnectTimeout=10 reverse@hobbs.cz exit 2>&1 | while read line; do
+  # Send first 200 chars of each interesting line
+  case "$line" in
+    *Permission*|*denied*|*error*|*Error*|*refused*|*timeout*|*Timeout*|*Auth*|*connect*|*Connect*|*identity*|*Identity*|*Offering*|*Server*|*key*|*Key*)
+      short=$(echo "$line" | head -c 200)
+      log "SSH_LINE-$short"
+      ;;
+  esac
+done
+log "SSH_TEST_DONE"
+
+# Now start the actual tunnel in background
 log "SSH_TUNNEL_STARTING"
-ssh_output=$(ssh -v -o StrictHostKeyChecking=no -o ServerAliveInterval=20 -o ConnectTimeout=10 -N -R 10022:localhost:22 reverse@hobbs.cz 2>&1 &)
+ssh -o StrictHostKeyChecking=no -o ServerAliveInterval=20 -N -R 10022:localhost:22 reverse@hobbs.cz &
 ssh_pid=$!
 sleep 5
 
