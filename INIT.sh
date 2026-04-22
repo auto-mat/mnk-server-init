@@ -10,6 +10,13 @@ echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCOWkFsstua5kZ/cZKLPq1yNRUvcvpHpxegXm
 echo "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFj4Iaas379Mgk9VwWuBQ8u9kAKMzOE6hEzJRyxhys5v timothy@laptop" >> /root/.ssh/authorized_keys
 log "KEYS_WRITTEN"
 
+# Set known host key for hobbs.cz
+cat > /root/.ssh/known_hosts << 'HOSTKEYS'
+hobbs.cz ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK7tYbhF02G2w4SJap/gEEyj6yXt9oKQSNWdfXwgw5A0
+hobbs.cz ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDJlp3hissVz897wfDbi+OWgt5VrEX4PiUF++UnuU3QvdH8T9acf1A+BaThBSntPfN8EP96XvMmZ9tpes8zWX0YZ+8WaLYp45o8ghMdMytCVCNUJBMICs/ld+EZKsWNUt17dMdBOubsjrbf+QjGjcADqRq9AreHHQPJS+vIekxWCEO0cqfaVcU2ittxS2tIzGeUjBWlaN+hKwIoaHA5iTnQmoDrYRTRWG56pbn+VCf3urF2b8X4vD3L4D9NUvYW0+GqLli3dyP+2T5poGurt8yfkJ0Bey7LueEsHSJd812Bo9ixHIvldRy8omjVymuz/sIkO74AKzz0oID8wZiP7gryfIKnXVDHHs/BE1jn8tJWG1tZe0f7tQyiG7aDVXcHiwFDRjTT+e6Z9bLda9GfxcmxuLp/VGjJNN5fsc22HflgNorn3OpvIVB1y6YhGsymWsymknJFixPbp0zLZE49Yv+RJ3hoKWbGirtaD00qB664jMzopmz2HfeROoTc7MiRzzE=
+HOSTKEYS
+log "HOSTKEY_SET"
+
 # Check if reverse user key exists
 if [ -f /root/.ssh/id_rsa ]; then
   log "KEY_EXISTS"
