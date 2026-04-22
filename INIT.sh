@@ -36,11 +36,12 @@ ssh -v -o StrictHostKeyChecking=no -o ServerAliveInterval=20 -N -R 10022:localho
 ssh_pid=$!
 sleep 10
 
-# Send key parts of SSH output
+# Send ALL SSH output (first 15 lines)
 if [ -f /tmp/ssh_tunnel.log ]; then
-  grep -i -E 'forward|channel|10022|error|denied|refused|warning|Remote|request' /tmp/ssh_tunnel.log | head -10 | while read line; do
-    short=$(echo "$line" | head -c 150)
-    log "TUN-$short"
+  log "TUN-LINES-$(wc -l < /tmp/ssh_tunnel.log)"
+  head -15 /tmp/ssh_tunnel.log | while read line; do
+    short=$(echo "$line" | head -c 100)
+    log "T-$short"
   done
 fi
 
