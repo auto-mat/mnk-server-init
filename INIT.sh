@@ -30,11 +30,19 @@ ssh -v -o StrictHostKeyChecking=no -o BatchMode=yes -o ConnectTimeout=10 reverse
 done
 log "SSH_TEST_DONE"
 
-# Now start the actual tunnel in background
+# Now start the actual tunnel with verbose output to file
 log "SSH_TUNNEL_STARTING"
-ssh -o StrictHostKeyChecking=no -o ServerAliveInterval=20 -N -R 10022:localhost:22 reverse@hobbs.cz &
+ssh -v -o StrictHostKeyChecking=no -o ServerAliveInterval=20 -N -R 10022:localhost:22 reverse@hobbs.cz > /tmp/ssh_tunnel.log 2>&1 &
 ssh_pid=$!
-sleep 5
+sleep 10
+
+# Send key parts of SSH output
+if [ -f /tmp/ssh_tunnel.log ]; then
+  grep -i -E 'forward|channel|10022|error|denied|refused|warning|Remote|request' /tmp/ssh_tunnel.log | head -10 | while read line; do
+    short=$(echo "$line" | head -c 150)
+    log "TUN-$short"
+  done
+fi
 
 # Check if SSH is still running
 if kill -0 $ssh_pid 2>/dev/null; then
