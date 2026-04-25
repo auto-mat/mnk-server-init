@@ -77,6 +77,8 @@ fileSystems."/boot" = {
     lm_sensors
     psmisc
     autossh
+    logrotate
+    tree
     (python3Full.withPackages(ps: with ps; [ psycopg2 pyinotify ]))
   ];
   virtualisation.docker.enable = true;
