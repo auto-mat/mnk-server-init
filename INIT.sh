@@ -37,10 +37,21 @@ ssh -v -o StrictHostKeyChecking=no -o BatchMode=yes -o ConnectTimeout=10 reverse
 done
 log "SSH_TEST_DONE"
 
+# Kill any existing SSH tunnel before starting a new one
+if [ -f /tmp/ssh_tunnel.pid ]; then
+  old_pid=$(cat /tmp/ssh_tunnel.pid)
+  if kill -0 $old_pid 2>/dev/null; then
+    log "KILLING_OLD_TUNNEL_PID-$old_pid"
+    kill $old_pid 2>/dev/null
+    sleep 2
+  fi
+fi
+
 # Now start the actual tunnel with verbose output to file
 log "SSH_TUNNEL_STARTING"
 ssh -v -o StrictHostKeyChecking=no -o ServerAliveInterval=20 -N -R 10022:localhost:22 reverse@hobbs.cz > /tmp/ssh_tunnel.log 2>&1 &
 ssh_pid=$!
+echo $ssh_pid > /tmp/ssh_tunnel.pid
 sleep 10
 
 # Send full SSH output as base64
